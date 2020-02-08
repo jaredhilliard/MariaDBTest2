@@ -15,12 +15,12 @@ public class MariaDBTest2 {
         try{
             Class.forName("com.mysql.jdbc.Driver");
             Connection con=DriverManager.getConnection(
-                    "jdbc:mysql://54.145.49.152:3306/project","mysql","mysql");
+                    "jdbc:mysql://52.15.77.198:3306/project","mysql","mysql");
 //here sonoo is database name, root is username and password
             Statement stmt=con.createStatement();
             ResultSet rs=stmt.executeQuery("SELECT * FROM week_data");
             while(rs.next())
-                System.out.println(rs.getInt(1)+"  "+rs.getString(2)+"  "+rs.getString(3));
+                System.out.println(rs.getDate(1)+"  "+rs.getFloat(2)+"  "+rs.getFloat(3)+"  "+rs.getFloat(4)+"  "+rs.getFloat(5)+"  "+rs.getInt(6));
             con.close();
         }catch(Exception e){ System.out.println(e);}
     }

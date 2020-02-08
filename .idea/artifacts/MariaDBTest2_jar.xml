@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="MariaDBTest2:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/MariaDBTest2_jar</output-path>
+    <root id="archive" name="MariaDBTest2.jar">
+      <element id="module-output" name="MariaDBTest2" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/mysql/mysql-connector-java/5.1.36/mysql-connector-java-5.1.36.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/mariadb/jdbc/mariadb-java-client/2.5.4/mariadb-java-client-2.5.4.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
