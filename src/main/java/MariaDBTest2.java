@@ -26,8 +26,12 @@ public class MariaDBTest2 {
                 System.out.println(rs.getDate(1)+"  "+rs.getFloat(2)+"  "+rs.getFloat(3)+"  "+rs.getFloat(4)+"  "+rs.getFloat(5)+"  "+rs.getInt(6));
             con.close();
         }catch(Exception e){ System.out.println(e);}*/
-
+        System.out.println("First I'm going to test the getDataByWeek method.");
         System.out.println(Controller.getDataByWeek("2020-02-08"));
+        System.out.println("Next I'll test the getDataByDay method.");
+        System.out.println(Controller.getDataByDay("2020-02-01"));
+        System.out.println("Next I'll test the getDataBy5Min method.");
+        System.out.println(Controller.getDataBy5Min("2020-02-01 09:00:00"));
     }
 }
 
@@ -65,6 +69,105 @@ class Controller {
                         rs.getString("open") + ", " +
                         rs.getString("close") + ", " +
                         rs.getString("volume");
+
+        }
+
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
+    static String getDataByDay(String s) {
+        String result = null;
+
+        try {Connection con = DriverManager.getConnection(dbUrl, username, password);
+            String query = "SELECT * FROM day_data WHERE day_date = ?";
+
+            PreparedStatement selectStmt = con.prepareStatement(query);
+            selectStmt.setDate(1, java.sql.Date.valueOf(s));
+
+            ResultSet rs = selectStmt.executeQuery();
+
+            if (rs.next() == false) {return "Empty";}
+
+            result = rs.getString("day_date") + ", " +
+                    rs.getString("high") + ", " +
+                    rs.getString("low") + ", " +
+                    rs.getString("open") + ", " +
+                    rs.getString("close") + ", " +
+                    rs.getString("volume");
+
+        }
+
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
+    static String getDataBy5Min(String s) {
+        String result = null;
+        String [] timeAndDate = s.split(" ");
+        String date = timeAndDate[0];
+        String time = timeAndDate[1];
+
+
+        try {Connection con = DriverManager.getConnection(dbUrl, username, password);
+            String query = "SELECT * FROM five_min_data WHERE five_min_date = ? and five_min_time = ?";
+
+            PreparedStatement selectStmt = con.prepareStatement(query);
+            selectStmt.setDate(1, java.sql.Date.valueOf(date));
+            selectStmt.setTime(2,java.sql.Time.valueOf(time));
+
+            ResultSet rs = selectStmt.executeQuery();
+
+            if (rs.next() == false) {return "Empty";}
+
+            result = rs.getString("five_min_date") + ", " +
+                    rs.getString("five_min_time") + ", " +
+                    rs.getString("high") + ", " +
+                    rs.getString("low") + ", " +
+                    rs.getString("open") + ", " +
+                    rs.getString("close") + ", " +
+                    rs.getString("volume");
+
+        }
+
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
+    static List<String> getAll5Min() {
+        String result = null;
+        String [] timeAndDate = s.split(" ");
+        String date = timeAndDate[0];
+        String time = timeAndDate[1];
+
+
+        try {Connection con = DriverManager.getConnection(dbUrl, username, password);
+            String query = "SELECT * FROM five_min_data";
+
+            PreparedStatement selectStmt = con.prepareStatement(query);
+            selectStmt.setDate(1, java.sql.Date.valueOf(date));
+            selectStmt.setTime(2,java.sql.Time.valueOf(time));
+
+            ResultSet rs = selectStmt.executeQuery();
+
+            if (rs.next() == false) {return "Empty";}
+
+            result = rs.getString("five_min_date") + ", " +
+                    rs.getString("five_min_time") + ", " +
+                    rs.getString("high") + ", " +
+                    rs.getString("low") + ", " +
+                    rs.getString("open") + ", " +
+                    rs.getString("close") + ", " +
+                    rs.getString("volume");
 
         }
 
