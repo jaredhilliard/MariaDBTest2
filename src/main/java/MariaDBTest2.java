@@ -40,6 +40,23 @@ public class MariaDBTest2 {
             System.out.println(TempList.get(i));
             i++;
         }
+        System.out.println();
+        System.out.println("Now testing the getAllDay method");
+        TempList = Controller.getAllDay();
+        i = 0;
+        while(i < TempList.size()){
+            System.out.println(TempList.get(i));
+            i++;
+        }
+        System.out.println();
+        System.out.println("Now testing the getAllWeek method");
+        TempList = Controller.getAllWeek();
+        i = 0;
+        while(i < TempList.size()){
+            System.out.println(TempList.get(i));
+            i++;
+        }
+
     }
 }
 
@@ -171,6 +188,64 @@ class Controller {
                             rs.getString("volume");
                     result.add(temp);
                 }
+
+        }
+
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
+    static ArrayList<String> getAllDay() {
+        ArrayList result = new ArrayList<String>();
+
+        try {Connection con = DriverManager.getConnection(dbUrl, username, password);
+            String query = "SELECT * FROM day_data";
+
+            PreparedStatement selectStmt = con.prepareStatement(query);
+
+            ResultSet rs = selectStmt.executeQuery();
+
+            while (rs.next()) {
+                String temp = rs.getString("day_date") + ", " +
+                        rs.getString("high") + ", " +
+                        rs.getString("low") + ", " +
+                        rs.getString("open") + ", " +
+                        rs.getString("close") + ", " +
+                        rs.getString("volume");
+                result.add(temp);
+            }
+
+        }
+
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
+    static ArrayList<String> getAllWeek() {
+        ArrayList result = new ArrayList<String>();
+
+        try {Connection con = DriverManager.getConnection(dbUrl, username, password);
+            String query = "SELECT * FROM week_data";
+
+            PreparedStatement selectStmt = con.prepareStatement(query);
+
+            ResultSet rs = selectStmt.executeQuery();
+
+            while (rs.next()) {
+                String temp = rs.getString("week_date") + ", " +
+                        rs.getString("high") + ", " +
+                        rs.getString("low") + ", " +
+                        rs.getString("open") + ", " +
+                        rs.getString("close") + ", " +
+                        rs.getString("volume");
+                result.add(temp);
+            }
 
         }
 
