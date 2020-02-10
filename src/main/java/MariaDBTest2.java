@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;*/
 import java.sql.*;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 /**
  *
@@ -32,6 +33,13 @@ public class MariaDBTest2 {
         System.out.println(Controller.getDataByDay("2020-02-01"));
         System.out.println("Next I'll test the getDataBy5Min method.");
         System.out.println(Controller.getDataBy5Min("2020-02-01 09:00:00"));
+        System.out.println("Now testing the getAll5Min method");
+        ArrayList<String> TempList = Controller.getAll5Min();
+        int i = 0;
+        while(i < TempList.size()){
+            System.out.println(TempList.get(i));
+            i++;
+        }
     }
 }
 
@@ -143,31 +151,26 @@ class Controller {
         return result;
     }
 
-    static List<String> getAll5Min() {
-        String result = null;
-        String [] timeAndDate = s.split(" ");
-        String date = timeAndDate[0];
-        String time = timeAndDate[1];
-
+    static ArrayList<String> getAll5Min() {
+        ArrayList result = new ArrayList<String>();
 
         try {Connection con = DriverManager.getConnection(dbUrl, username, password);
             String query = "SELECT * FROM five_min_data";
 
             PreparedStatement selectStmt = con.prepareStatement(query);
-            selectStmt.setDate(1, java.sql.Date.valueOf(date));
-            selectStmt.setTime(2,java.sql.Time.valueOf(time));
 
             ResultSet rs = selectStmt.executeQuery();
 
-            if (rs.next() == false) {return "Empty";}
-
-            result = rs.getString("five_min_date") + ", " +
-                    rs.getString("five_min_time") + ", " +
-                    rs.getString("high") + ", " +
-                    rs.getString("low") + ", " +
-                    rs.getString("open") + ", " +
-                    rs.getString("close") + ", " +
-                    rs.getString("volume");
+            while (rs.next()) {
+                    String temp = rs.getString("five_min_date") + ", " +
+                            rs.getString("five_min_time") + ", " +
+                            rs.getString("high") + ", " +
+                            rs.getString("low") + ", " +
+                            rs.getString("open") + ", " +
+                            rs.getString("close") + ", " +
+                            rs.getString("volume");
+                    result.add(temp);
+                }
 
         }
 
