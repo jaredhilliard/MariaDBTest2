@@ -179,7 +179,7 @@ class Controller {
             ResultSet rs = selectStmt.executeQuery();
 
             while (rs.next()) {
-                    String temp = rs.getString("five_min_date") + ", " +
+                    String temp = rs.getString("five_min_date") + " " +
                             rs.getString("five_min_time") + ", " +
                             rs.getString("high") + ", " +
                             rs.getString("low") + ", " +
